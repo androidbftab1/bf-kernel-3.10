@@ -217,7 +217,7 @@ static int gpio_led_probe(struct platform_device *pdev)
 	}
 	led_name = (char (*)[5]) led_list_name;
 
-	for (int i = 0; i < led_num; i++) {
+	for (i = 0; i < led_num; i++) {
 		sprintf(led_name[i], "%s%d", "led", i+1);
 		sprintf(trigger_name, "%s%s", led_name[i], "_trigger");
 		ret = of_get_named_gpio_flags(np,

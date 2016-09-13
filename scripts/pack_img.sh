@@ -11,6 +11,7 @@
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
 
+
 ############################ Notice #####################################
 # a. Some config files priority is as follows:
 #    - xxx_${platform}.{cfg|fex} > xxx.{cfg|fex}
@@ -98,6 +99,11 @@ else
 	echo "board_platform($PACK_CHIP) not support"
 fi
 
+#BPI
+if [ -f ${PACK_TOPDIR}/env.sh ] ; then
+	source ${PACK_TOPDIR}/env.sh
+fi
+
 tools_file_list=(
 generic/tools/split_xxxx.fex
 ${PACK_BOARD_PLATFORM}-common/tools/split_xxxx.fex
@@ -117,6 +123,11 @@ generic/tools/aultools.fex
 ${PACK_BOARD_PLATFORM}-common/tools/aultools.fex
 )
 
+#BPI
+#
+#${PACK_BOARD}/configs/*.fex
+#${PACK_BOARD}/configs/*.cfg
+#
 configs_file_list=(
 generic/toc/toc1.fex
 generic/toc/toc0.fex
@@ -126,16 +137,20 @@ generic/configs/*.fex
 generic/configs/*.cfg
 ${PACK_BOARD_PLATFORM}-common/configs/*.fex
 ${PACK_BOARD_PLATFORM}-common/configs/*.cfg
-${PACK_BOARD}/configs/*.fex
-${PACK_BOARD}/configs/*.cfg
+${PACK_BOARD}/configs/default/*.fex
+${PACK_BOARD}/configs/default/*.cfg
+${PACK_BOARD}/configs/${BOARD}/*.fex
+${PACK_BOARD}/configs/${BOARD}/*.cfg
 )
 
+#BPI
 boot_resource_list=(
 generic/boot-resource/boot-resource:image/
 generic/boot-resource/boot-resource.ini:image/
 ${PACK_BOARD_PLATFORM}-common/boot-resource:image/
 ${PACK_BOARD_PLATFORM}-common/boot-resource.ini:image/
-${PACK_BOARD}/configs/*.bmp:image/boot-resource/
+${PACK_BOARD}/configs/default/*.bmp:image/boot-resource/
+${PACK_BOARD}/configs/${BOARD}/*.bmp:image/boot-resource/
 )
 
 boot_file_list=(

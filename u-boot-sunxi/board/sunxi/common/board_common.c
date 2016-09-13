@@ -463,7 +463,10 @@ int update_fdt_para_for_kernel(void* dtb_base)
 			else
 			{
 				disable_node("nand0");
-				disable_node("mmc2");
+#ifdef BPI
+				disable_node("mmc2"); // BPI
+#else
+#endif
 				disable_node("mmc3");
 			}
 		}

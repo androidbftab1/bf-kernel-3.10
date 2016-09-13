@@ -60,6 +60,7 @@ ifeq ("$(origin V)", "command line")
   KBUILD_VERBOSE = $(V)
 endif
 ifndef KBUILD_VERBOSE
+#BPI
   KBUILD_VERBOSE = 0
 endif
 
@@ -849,12 +850,15 @@ u-boot.bin: u-boot FORCE
 	$(call if_changed,objcopy)
 	$(call DO_STATIC_RELA,$<,$@,$(CONFIG_SYS_TEXT_BASE))
 	$(BOARD_SIZE_CHECK)
-	@git show HEAD --pretty=format:"%H" | head -n 1 > cur.log
+#BPI
+#	@git show HEAD --pretty=format:"%H" | head -n 1 > cur.log
 	./tools/add_hash_uboot.sh -f u-boot.bin -m uboot
 
 u-boot-$(CONFIG_TARGET_NAME).bin:   u-boot.bin
 	@cp -v $<    $@
-	@cp -v $@ $(objtree)/../../../target/allwinner/$(TARGET_PLATFORM)-common/bin/$@
+#BPI
+#	@cp -v $@ $(objtree)/../../../target/allwinner/$(TARGET_PLATFORM)-common/bin/$@
+	@cp -v $@ $(objtree)/../sunxi-pack/allwinner/$(TARGET_PLATFORM)-common/bin/$@
 	@if [ -d nand_sunxi/$(SOC)/lib-nand ];  then \
 		cp -v  nand_sunxi/$(SOC)/lib-nand/built-in.o nand_sunxi/$(SOC)/libnand-$(SOC); \
 	fi

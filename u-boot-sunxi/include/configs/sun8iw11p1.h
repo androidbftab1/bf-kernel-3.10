@@ -255,7 +255,7 @@
 #define CONFIG_SYS_LONGHELP				/* undef to save memory */
 #define CONFIG_SYS_HUSH_PARSER			/* use "hush" command parser	*/
 #define CONFIG_SYS_PROMPT_HUSH_PS2	"> "
-#define CONFIG_SYS_PROMPT		"sunxi#"
+#define CONFIG_SYS_PROMPT		"IoT# " /* "sunxi#" BPI */
 #define CONFIG_SYS_CBSIZE	256			/* Console I/O Buffer Size */
 #define CONFIG_SYS_PBSIZE	384			/* Print Buffer Size */
 #define CONFIG_SYS_MAXARGS	16			/* max number of command args */
@@ -379,6 +379,7 @@
 ***************************************************************/
 
 
+#define CONFIG_CMD_ECHO			/* BPI echo cmd */
 #define CONFIG_CMD_BOOTA		/* boot android image */
 #define CONFIG_CMD_RUN			/* run a command */
 #define CONFIG_CMD_BOOTD		/* boot the default command */
@@ -459,6 +460,8 @@
 #define ALIGN_SIZE_8K
 
 #endif
+
+//#define CONFIG_SUNXI_WEMAC 		/* BPI */
 
 #ifdef CONFIG_SUNXI_MODULE_USB
 /* USB SUSPORT */

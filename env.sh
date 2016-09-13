@@ -1,0 +1,12 @@
+export ARCH=arm
+export BOARD=BPI_M2U_720P
+export SOC=r40
+export MACH=sun8iw11p1
+export CROSS_COMPILE=arm-linux-gnueabihf-
+export UBOOT_CONFIG=sun8iw11p1_config
+export KERNEL_CONFIG=sun8iw11p1smp_bpi_defconfig
+export LICHEE_PLATFORM="linux"
+export GPU_TYPE="mali400"
+export TOPDIR=/media/mikey/BPI-OS/github/build/BPI-M2U-bsp
+export TARGET_PLATFORM=azalea
+export TARGET_PRODUCT=azalea-m2ultra
