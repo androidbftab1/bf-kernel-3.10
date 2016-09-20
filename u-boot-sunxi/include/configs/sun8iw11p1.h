@@ -379,6 +379,7 @@
 ***************************************************************/
 
 
+//#define CONFIG_BOOT_GUI			/* BPI BOOT GUI */
 #define CONFIG_CMD_ECHO			/* BPI echo cmd */
 #define CONFIG_CMD_BOOTA		/* boot android image */
 #define CONFIG_CMD_RUN			/* run a command */
@@ -473,6 +474,37 @@
 #define CONFIG_USB_STORAGE
 #define CONFIG_USB_EHCI
 #endif
+
+//#define CONFIG_CMD_GPIO		/* BPI */
+//#define CONFIG_CMD_I2C		/* BPI */
+//#define CONFIG_CMD_LED		/* BPI */
+//#define CONFIG_CMD_SPI		/* BPI */
+
+/* net support */
+#define CONFIG_SUNXI_GMAC	/* BPI */
+#define CONFIG_CMD_DHCP		/* BPI */
+#define CONFIG_CMD_NET		/* BPI */
+#define CONFIG_CMD_PING		/* BPI */
+
+
+#ifdef CONFIG_SUNXI_GMAC
+#define CONFIG_DESIGNWARE_ETH		/* GMAC can use designware driver */
+#define CONFIG_DW_AUTONEG
+#define CONFIG_PHY_GIGE			/* GMAC can use gigabit PHY	*/
+#define CONFIG_PHY_ADDR		1
+#define CONFIG_MII			/* MII PHY management		*/
+#define CONFIG_PHYLIB
+#endif
+
+#ifdef CONFIG_CMD_NET
+#define CONFIG_CMD_NFS
+#define CONFIG_CMD_DNS
+#define CONFIG_NETCONSOLE
+#define CONFIG_BOOTP_DNS2
+#define CONFIG_BOOTP_SEND_HOSTNAME
+#endif
+
+
 
 //#define CONFIG_USB_ETHER
 #ifdef CONFIG_USB_ETHER

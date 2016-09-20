@@ -17,7 +17,8 @@ die() {
 . ./env.sh
 
 O=$1
-P=../out/${TARGET_PRODUCT}/image/
+#P=../out/${TARGET_PRODUCT}/image/
+P=$TOPDIR/out/${TARGET_PRODUCT}/image/
 
 sudo dd if=$P/boot0_sdcard.fex 	of=$O bs=1k seek=8
 sudo dd if=$P/boot_package.fex 	of=$O bs=1k seek=16400

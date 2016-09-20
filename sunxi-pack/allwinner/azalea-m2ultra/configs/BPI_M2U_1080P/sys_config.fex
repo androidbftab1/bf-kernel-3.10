@@ -10,6 +10,19 @@ machine = "m2ultra"
 
 [platform]
 eraseflag   = 0
+;BPI-M2U
+;user_mode_used = 1
+
+;SATA gpio_control PD25, Green LED, Blue LED
+[boot_init_gpio]
+used   = 1
+gpio_used       = 1
+gpio_num        = 3
+gpio_pin_1	= port:PH20<1><default><default><1>
+gpio_pin_2	= port:PH21<1><default><default><1>
+gpio_pin_3	= port:PH22<1><default><default><1>
+
+
 ;----------------------------------------------------------------------------------
 ;   system configuration
 ;   ?
@@ -28,6 +41,16 @@ burn_key = 1
 
 [norflash]
 size		= 16
+[charging_type]
+charging_type = 1
+;---------------------------------------------------------------------------------
+; uboot key detect enable
+; 当keyen_flag = 1 时，支持按键检测
+; 当keyen_flag = 0 时，不支持
+;---------------------------------------------------------------------------------
+[key_detect_en]
+keyen_flag = 1
+
 ;----------------------------------------------------------------------------------
 ;
 ;  各路电压输出语法说明：
@@ -125,12 +148,107 @@ jtag_di         = port:PB17<3><default><default><default>
 compatible              = "allwinner,sunxi-leds"
 led_used		= 1
 led_num	 	 	= 3
+;led_num	 	 	= 31
 led1			= port:PH20<1><default><default><default>
 led1_trigger		= "default-on"
 led2			= port:PH21<1><default><default><default>
 led2_trigger		= "heartbeat"
 led3			= port:PH22<1><default><default><default>
 led3_trigger		= "mmc0"
+
+;led4			= port:PB21<1><default><default><default>
+;led4_trigger		= "heartbeat"
+;led5			= port:PB20<1><default><default><default>
+;led5_trigger		= "heartbeat"
+;led6			= port:PB3<1><default><default><default>
+;led6_trigger		= "heartbeat"
+;led7			= port:PI20<1><default><default><default>
+;led7_trigger		= "heartbeat"
+;led8			= port:PI21<1><default><default><default>
+;led8_trigger		= "heartbeat"
+;led9			= port:PH25<1><default><default><default>
+;led9_trigger		= "heartbeat"
+;led10			= port:PC0<1><default><default><default>
+;led10_trigger		= "heartbeat"
+;led11			= port:PC1<1><default><default><default>
+;led11_trigger		= "heartbeat"
+;led12			= port:PC2<1><default><default><default>
+;led12_trigger		= "heartbeat"
+;led13			= port:PI1<1><default><default><default>
+;led13_trigger		= "heartbeat"
+;led14			= port:PH0<1><default><default><default>
+;led14_trigger		= "heartbeat"
+;led15			= port:PH1<1><default><default><default>
+;led15_trigger		= "heartbeat"
+;led16			= port:PH2<1><default><default><default>
+;led16_trigger		= "heartbeat"
+;led17			= port:PH3<1><default><default><default>
+;led17_trigger		= "heartbeat"
+;led18			= port:PH4<1><default><default><default>
+;led18_trigger		= "heartbeat"
+;
+;led19			= port:PI18<1><default><default><default>
+;led19_trigger		= "heartbeat"
+;led20			= port:PI19<1><default><default><default>
+;led20_trigger		= "heartbeat"
+;led21			= port:PI17<1><default><default><default>
+;led21_trigger		= "heartbeat"
+;led22			= port:PI16<1><default><default><default>
+;led22_trigger		= "heartbeat"
+;led23			= port:PH26<1><default><default><default>
+;led23_trigger		= "heartbeat"
+;led24			= port:PH27<1><default><default><default>
+;led24_trigger		= "heartbeat"
+;led25			= port:PC23<1><default><default><default>
+;led25_trigger		= "heartbeat"
+;led26			= port:PH24<1><default><default><default>
+;led26_trigger		= "heartbeat"
+;led27			= port:PI0<1><default><default><default>
+;led27_trigger		= "heartbeat"
+;led28			= port:PD20<1><default><default><default>
+;led28_trigger		= "heartbeat"
+;led29			= port:PH7<1><default><default><default>
+;led29_trigger		= "heartbeat"
+;led30			= port:PH6<1><default><default><default>
+;led30_trigger		= "heartbeat"
+;led31			= port:PH5<1><default><default><default>
+;led31_trigger		= "heartbeat"
+
+;led1 gpio number is 244                                          
+;led1_trigger led trigger name is default-on                      
+;led2 gpio number is 245                                          
+;led2_trigger led trigger name is heartbeat                       
+;led3 gpio number is 246                                          
+;led3_trigger led trigger name is mmc0                            
+
+;led4 gpio number is 53                                           
+;led5 gpio number is 52                                           
+;led6 gpio number is 35                                           
+;led7 gpio number is 276                                          
+;led8 gpio number is 277                                          
+;led9 gpio number is 249                                          
+;led10 gpio number is 64                                          
+;led11 gpio number is 65                                          
+;led12 gpio number is 66                                          
+;led13 gpio number is 257                                         
+;led14 gpio number is 224                                         
+;led15 gpio number is 225                                         
+;led16 gpio number is 226                                         
+;led17 gpio number is 227                                         
+;led18 gpio number is 228                                         
+;led19 gpio number is 274                                         
+;led20 gpio number is 275                                         
+;led21 gpio number is 273                                         
+;led22 gpio number is 272                                         
+;led23 gpio number is 250                                         
+;led24 gpio number is 251                                         
+;led25 gpio number is 87                                          
+;led26 gpio number is 248                                         
+;led27 gpio number is 256                                         
+;led28 gpio number is 116                                         
+;led29 gpio number is 231                                         
+;led30 gpio number is 230                                         
+;led31 gpio number is 229                                         
 
 ;----------------------------------------------------------------------------------
 ;
@@ -295,9 +413,9 @@ uart0_type       = 2
 uart0_tx         = port:PB22<2><1><default><default>
 uart0_rx         = port:PB23<2><1><default><default>
 
-;[uart0_suspend]
-;uart0_tx         = port:PB22<7><1><default><default>
-;uart0_rx         = port:PB23<7><1><default><default>
+[uart0_suspend]
+uart0_tx         = port:PB22<7><1><default><default>
+uart0_rx         = port:PB23<7><1><default><default>
 
 [uart1]
 uart1_used       = 0
@@ -544,6 +662,15 @@ nand0_p1 = 0x55aaaa55
 nand0_p2 = 0x55aaaa55
 nand0_p3 = 0x55aaaa55
 
+[boot_disp]
+output_disp = 0
+; output_type: 1:LCD 2:TV 3:HDMI 4:VGA
+output_type = 3
+output_mode = 10
+auto_hpd        = 1
+output_full     = 1
+hdmi_mode_check = 1
+
 ;----------------------------------------------------------------------------------
 ;disp init configuration
 ;
@@ -568,14 +695,14 @@ disp_mode                = 0
 screen0_output_type      = 3
 screen0_output_mode      = 10
 
-screen1_output_type      = 3
-screen1_output_mode      = 10
+screen1_output_type      = 1
+screen1_output_mode      = 5
 
 fb0_format               = 0
 fb0_width                = 0
 fb0_height               = 0
 
-fb1_format               = 0
+fb1_format               = 8
 fb1_width                = 0
 fb1_height               = 0
 
@@ -592,10 +719,6 @@ lcd1_contrast            = 50
 lcd1_saturation          = 57
 lcd1_hue                 = 50
 
-[boot_disp]
-output_disp = 0
-output_type = 3
-output_mode = 10
 
 ;----------------------------------------------------------------------------------
 ;tv configuration
@@ -700,7 +823,7 @@ cagc_enable             = 1
 ;smart_color           90:normal lcd screen 65:retina lcd screen(9.7inch)
 ;----------------------------------------------------------------------------------
 [lcd0]
-lcd_used            = 0
+lcd_used            = 1
 
 lcd_driver_name     = "S070WV20_MIPI_RGB"
 lcd_backlight       = 50

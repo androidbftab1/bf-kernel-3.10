@@ -34,5 +34,6 @@ sudo losetup -d ${LOOP_DEV}
 dd if=${TMP_FILE} of=${IMG_FILE} bs=1024 skip=8 count=102392 status=noxfer
 
 rm -f ${IMG_FILE}.gz
+echo "gzip ${IMG_FILE}"
 gzip ${IMG_FILE}
 rm -f ${TMP_FILE}

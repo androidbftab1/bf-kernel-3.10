@@ -18,3 +18,5 @@ PLATFORM="tina"
 echo "MACH=$MACH, PLATFORM=$PLATFORM, BOARD=$BOARD"
 
 scripts/pack_img.sh -c ${MACH} -p ${PLATFORM} -b ${TARGET_PRODUCT} -d uart0 -s none -s none -t $TOPDIR
+
+scripts/bootloader.sh
