@@ -90,7 +90,27 @@ static int do_bootm_subcommand(cmd_tbl_t *cmdtp, int flag, int argc,
 /*******************************************************************/
 /* bootm - boot application image from image in memory */
 /*******************************************************************/
+static void update_bootargs(void)
+{
+	char *str;
+	char cmdline[1024] = {0};
+	char tmpbuf[128] = {0};
+	str = getenv("bootargs");
 
+	strcpy(cmdline,str);
+	if(gd->chargemode)
+	{
+		if((0==strcmp(getenv("bootcmd"),"run setargs_mmc boot_normal"))||(0==strcmp(getenv("bootcmd"),"run setargs_nand boot_normal")))
+		{
+			printf("only in boot normal mode, pass charger para to kernel\n");
+			strcat(cmdline," androidboot.mode=charger");
+		}
+	}
+	str = getenv("sunxi_serial");
+	sprintf(tmpbuf," androidboot.serialno=%s",str);
+	strcat(cmdline,tmpbuf);
+	setenv("bootargs", cmdline);
+}
 int do_bootm(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 {
 #ifdef CONFIG_NEEDS_MANUAL_RELOC
@@ -124,7 +144,7 @@ int do_bootm(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
 		if ((*endp != 0) && (*endp != ':') && (*endp != '#'))
 			return do_bootm_subcommand(cmdtp, flag, argc, argv);
 	}
-
+	update_bootargs();
 	return do_bootm_states(cmdtp, flag, argc, argv, BOOTM_STATE_START |
 		BOOTM_STATE_FINDOS | BOOTM_STATE_FINDOTHER |
 		BOOTM_STATE_LOADOS |

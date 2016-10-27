@@ -8,7 +8,8 @@ GCOV_PROFILE=no
 
 #use "-Os" flags.
 #Don't use "-O2" flags.
-KBUILD_CFLAGS := -g -c -nostdlib -march=armv7-a -D__LINUX_ARM_ARCH__=7 -marm -fno-unwind-tables -fno-jump-tables -fno-asynchronous-unwind-tables -mlittle-endian -O2 -mno-unaligned-access
+KBUILD_CFLAGS := -g -c -nostdlib -march=armv7-a -D__LINUX_ARM_ARCH__=7 -marm -fno-unwind-tables -fno-jump-tables -fno-asynchronous-unwind-tables -mlittle-endian -O2 -mno-unaligned-access -Idrivers/soc/allwinner/pm
+KBUILD_AFLAGS += -Idrivers/soc/allwinner/pm
 
 #Include the cur dir.
 KBUILD_CPPFLAGS += -I.
@@ -32,12 +33,12 @@ standby-y := common.o                    \
              standby_debug.o             \
              standby_divlib.o            \
              standby_dram.o            \
-             ./../mem_mmu_pc_asm.o       \
-             ./../mem_divlibc.o          \
-             ./../mem_clk.o              \
-             ./../mem_timing.o           \
-             ./../mem_serial.o           \
-             ./../mem_printk.o           \
+             mem_mmu_pc_asm.o       \
+             mem_divlibc.o          \
+             mem_clk.o              \
+             mem_timing.o           \
+             mem_serial.o           \
+             mem_printk.o           \
              main.o
 
 ifneq ($(strip $(CONFIG_ARCH_SUN8IW11)),)

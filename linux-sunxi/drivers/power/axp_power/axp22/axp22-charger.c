@@ -648,7 +648,17 @@ static irqreturn_t axp_ac_usb_in_isr(int irq, void *data)
 	return IRQ_HANDLED;
 }
 
-static irqreturn_t axp_ac_usb_out_isr(int irq, void *data)
+extern int axp_usbcur(enum AW_CHARGE_TYPE type);
+static irqreturn_t axp_ac_out_isr(int irq, void *data)
+{
+	struct axp_charger_dev *chg_dev = data;
+	axp_usbcur(CHARGE_USB_20);
+	axp_change(chg_dev);
+	axp_usbac_out(chg_dev);
+	return IRQ_HANDLED;
+}
+
+static irqreturn_t axp_usb_out_isr(int irq, void *data)
 {
 	struct axp_charger_dev *chg_dev = data;
 	axp_change(chg_dev);
@@ -686,9 +696,9 @@ static irqreturn_t axp_low_warning2_isr(int irq, void *data)
 
 static struct axp_interrupts axp_charger_irq[] = {
 	{"usb in",        axp_ac_usb_in_isr},
-	{"usb out",       axp_ac_usb_out_isr},
+	{"usb out",       axp_usb_out_isr},
 	{"ac in",         axp_ac_usb_in_isr},
-	{"ac out",        axp_ac_usb_out_isr},
+	{"ac out",        axp_ac_out_isr},
 	{"bat in",        axp_capchange_isr},
 	{"bat out",       axp_capchange_isr},
 	{"bat temp low",  axp_change_isr},

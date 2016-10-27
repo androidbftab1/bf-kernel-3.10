@@ -402,6 +402,17 @@ twi4_sda         = port:PI03<3><default><default><default>
 ;reg               =
 
 ;----------------------------------------------------------------------------------
+;ir remote configuration
+;----------------------------------------------------------------------------------
+[ir0]
+ir0_used	   = 1
+ir_power_key_code  = 0x0
+ir_addr_code0	   = 0x4
+ir_addr_cnt	   = 0x1
+supply		   = "vcc-3v"
+supply_vol	   = "3300000"
+
+;----------------------------------------------------------------------------------
 ;uart configuration
 ;uart_port ---  x (ttySx, x=0,1,2,..., x can not be reused)
 ;uart_type ---  2 (2 wire), 4 (4 wire), 8 (8 wire, full function)
@@ -1214,7 +1225,7 @@ usb_regulator_vol   = 0
 usb_wakeup_suspend  = 0
 ;---       USB Device
 usb_luns            = 3
-usb_serial_unique   = 0
+usb_serial_unique   = 1
 usb_serial_number   = "20080411"
 
 ;--------------------------------
@@ -1434,6 +1445,7 @@ daudio1_used = 0
 ;---------------------------------------------------------------------------------
 [sndcodec]
 sndcodec_used = 0x1
+jack_det_gpio = port:PH14<0><default><default><default>
 ;------------------------------------------------------------------------------
 [codec]
 codec_used = 0x1
@@ -1456,7 +1468,7 @@ dachpf_cfg =   0x0
 ;pmu_vbusen_func             ---N_VBUSEN function select,0:as an output,1:as an input
 ;pmu_reset                   ---when power key press longer than 16's,PMU reset or not.0:not reset 1:reset
 ;pmu_irq_wakeup              ---press irq wakeup or not when sleep or power down.0:not wakeup 1:wakeup
-;pmu_hot_shutdowm            ---when PMU over temperature protect or not;0:disable 1:enable
+;pmu_hot_shutdown            ---when PMU over temperature protect or not;0:disable 1:enable
 ;pmu_inshort                 ---ACIN and VBUS inshort or not by software;0:auto detect 1:inshort
 ;--------------------------------------------------------------------------------------------------------
 [pmu0]
@@ -1467,7 +1479,7 @@ reg                        = 0x34
 pmu_vbusen_func            = 0
 pmu_reset                  = 0
 pmu_irq_wakeup             = 1
-pmu_hot_shutdowm           = 1
+pmu_hot_shutdown           = 1
 pmu_inshort                = 0
 pmu_start				   = 0
 ;--------------------------------------------------------------------------------------------------------
@@ -1558,8 +1570,8 @@ pmu_usbpc_vol              = 4400
 pmu_usbpc_cur              = 500
 pmu_battery_warning_level1 = 15
 pmu_battery_warning_level2 = 0
-pmu_chgled_func            = 0
-pmu_chgled_type            = 0
+pmu_chgled_func            = 1
+pmu_chgled_type            = 1
 power_start                = 0
 
 pmu_bat_para1              = 0
@@ -1595,7 +1607,7 @@ pmu_bat_para30             = 94
 pmu_bat_para31             = 95
 pmu_bat_para32             = 100
 
-pmu_bat_temp_enable        = 0
+pmu_bat_temp_enable        = 1
 pmu_bat_charge_ltf         = 2261
 pmu_bat_charge_htf         = 388
 pmu_bat_shutdown_ltf       = 3200

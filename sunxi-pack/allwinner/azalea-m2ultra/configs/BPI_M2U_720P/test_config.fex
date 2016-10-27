@@ -34,8 +34,8 @@ display_name= "DDR"
 activated   = 1
 program     = "memtester.sh"
 category    = 0
-run_type    = 0
-platform    = r16
+run_type    = 1
+platform    = r40
 dram_size   = 512
 test_size   = 8
 
@@ -44,7 +44,7 @@ display_name= "RTC"
 activated   = 1
 program     = "rtctester.sh"
 category    = 0
-run_type    = 0
+run_type    = 1
 
 ;-------------------------------------------------------------------------------
 ; module_path
@@ -57,10 +57,14 @@ display_name= "WIFI"
 activated   = 1
 program     = "wifitester.sh"
 category    = 0
-run_type    = 0
-module_count= 1
-module_path = "/lib/modules/3.4.39/bcmdhd.ko"
-module_args = "nvram_path=/lib/firmware/ap6212/nvram_ap6212.txt"
+run_type    = 1
+
+[eth]
+display_name= "Ethernet"
+activated   = 1
+program     = "ethtester.sh"
+category    = 0
+run_type    = 1
 
 ;-------------------------------------------------------------------------------
 ; module_path
@@ -73,10 +77,8 @@ display_name= "Gsenser"
 activated   = 0
 program     = "gsensortester.sh"
 category    = 0
-run_type    = 0
+run_type    = 1
 module_count= 1
-module1_path= "/lib/modules/3.4.39/lis3dh_acc.ko"
-device_name = "lis3dh_acc"
 
 ;-------------------------------------------------------------------------------
 ; test_size
@@ -84,62 +86,81 @@ device_name = "lis3dh_acc"
 ;-------------------------------------------------------------------------------
 [nand]
 display_name= "Nand Flash"
-activated   = 1
+activated   = 0
 program     = "nandtester.sh"
 category    = 0
-run_type    = 0
-module_path = "/lib/modules/3.4.39/nand.ko"
+run_type    = 1
 test_size   = 16
 
 [emmc]
 display_name= "eMMC Flash"
-activated   = 0
+activated   = 1
 program     = "emmctester.sh"
 category    = 0
-run_type    = 0
+run_type    = 1
 test_size   = 128
 
 [bluetooth]
 display_name= "BlueTooth"
-activated   = 0
+activated   = 1
 program     = "bttester.sh"
 test_time   = 3
 category    = 0
 dst_bt      = ":"
-run_type    = 0
-module_path = "/system/vendor/modules/bcm2076b1.hcd"
-device_node = "/dev/ttyS1"
+run_type    = 1
+module_path = "/lib/firmware/bcm43438a0.hcd"
+device_node = "/dev/ttyS3"
 baud_rate   = 1500000
 
 [mmc]
 display_name= "SD/TF Card"
-activated   = 0
+activated   = 1
 program     = "mmctester.sh"
-category    = 1
-run_type    = 0
+category    = 0
+run_type    = 1
 nr          = 0
+
+[sata]
+display_name= "SATA"
+activated   = 1
+program     = "satatester.sh"
+category    = 0
+run_type    = 1
 
 [udisk]
 display_name= "USB UDISK"
 activated   = 0
 program     = "udisktester.sh"
 category    = 1
-run_type    = 0
+run_type    = 1
 
+[Usb_HOST1]
+display_name= "USB_HOST1"
+activated   = 1
+program     = "host1tester.sh"
+category    = 0
+run_type    = 1
+
+[Usb_HOST2]
+display_name= "USB_HOST2"
+activated   = 1
+program     = "host2tester.sh"
+category    = 0
+run_type    = 1
 
 [Usb_OTG]
 display_name= "USB_OTG"
-activated   = 0
+activated   = 1
 program     = "otgtester.sh"
-category    = 1
-run_type    = 0
+category    = 0
+run_type    = 1
 
 [pmu]
 display_name= "PMU"
 activated   = 1
 program     = "pmutester.sh"
 category    = 0
-run_type    = 0
+run_type    = 1
 ;-------------------------------------------------------------------------------
 ; sound_file
 ;   The full path of sound file.
@@ -160,11 +181,11 @@ run_type    = 0
 ;-------------------------------------------------------------------------------
 [hdmi]
 display_name= "HDMI"
-activated   = 0
+activated   = 1
 program     = "hdmitester"
 category    = 1
-run_type    = 0
-sound_file  = "/dragonboard/data/test48000.pcm"
+run_type    = 1
+sound_file  = "/media/test48000.pcm"
 samplerate  = 48000
 support_mode= 2
 
@@ -174,11 +195,10 @@ support_mode= 2
 ;-------------------------------------------------------------------------------
 [key]
 display_name= "KEY"
-activated   = 1
+activated   = 0
 program     = "keytester"
 category    = 1
-run_type    = 0
-module_path = "/lib/modules/3.4.39/sunxi-keyboard.ko"
+run_type    = 1
 
 ;-------------------------------------------------------------------------------
 ; module_path
@@ -186,10 +206,10 @@ module_path = "/lib/modules/3.4.39/sunxi-keyboard.ko"
 ;-------------------------------------------------------------------------------
 [ir]
 display_name= "Infrared"
-activated   = 0
+activated   = 1
 program     = "irtester"
 category    = 1
-run_type    = 0
+run_type    = 1
 module_path = "/lib/modules/3.4.39/sun6i-ir.ko"
 
 ;-------------------------------------------------------------------------------
@@ -200,10 +220,33 @@ module_path = "/lib/modules/3.4.39/sun6i-ir.ko"
 [mic]
 display_name= "MIC"
 activated   = 1
-program     = "mictester"
-category    = 0
-run_type    = 0
+program     = "mictester.sh"
+category    = 1
+platform    = r40
+run_type    = 1
+delay       = 3
+volume      = 40
+samplerate  = 48000
+music_playtime =10
+mic1_used   = 1
+mic2_used   = 0
+mic1_gain   = 1
+mic2_gain   = 1
+mic1_threshold =64
+mic2_threshold =64
 music_file  = "/media/send.pcm"
+
+[headphone]
+display_name= "Headphone"
+activated   = 1
+program     = "headtester.sh"
+category    = 1
+platform    = r40
+run_type    = 1
+delay       = 3
+volume      = 40
+samplerate  = 48000
+music_playtime =10
 
 ;-------------------------------------------------------------------------------
 ; type
@@ -216,7 +259,8 @@ music_file  = "/media/send.pcm"
 display_name= "TP"
 activated   = 0
 program     = "tptester"
-run_type    = 0
+run_type    = 1
+category    = 1
 module_path = "/lib/modules/3.4.39/gt9xxf_ts.ko"
 event_num   = 3
 
@@ -229,9 +273,11 @@ event_num   = 3
 ;-------------------------------------------------------------------------------
 [led]
 display_name= "LED"
-activated   = 0
-program     = "ledtester"
+activated   = 1
+program     = "ledtester.sh"
 type        = 1
+run_type    = 1
+category    = 1
 module_path = "/lib/modules/3.4.39/led.ko"
 event_num   = 3
 
@@ -243,18 +289,9 @@ event_num   = 3
 ;-------------------------------------------------------------------------------
 [camera]
 display_name=  "Camera"
-activated   = 0
-program     = "cameratester"
-module_count= 9
-module1_path= "/lib/modules/3.4.39/videobuf-core.ko"
-module2_path= "/lib/modules/3.4.39/videobuf-dma-contig.ko"
-module3_path= "/lib/modules/3.4.39/cci.ko"
-module4_path= "/lib/modules/3.4.39/vfe_os.ko"
-module5_path= "/lib/modules/3.4.39/vfe_subdev.ko"
-module6_path= "/lib/modules/3.4.39/gc0328.ko"
-module7_path= "/lib/modules/3.4.39/gc2035.ko"
-module8_path= "/lib/modules/3.4.39/gc2155.ko"
-module9_path= "/lib/modules/3.4.39/vfe_v4l2.ko"
+activated   = 1
+run_type    = 1
+category    = 1
 dev_cnt     = 2
 csi_cnt     = 1
 fps         = 30

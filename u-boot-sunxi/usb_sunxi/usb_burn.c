@@ -715,31 +715,33 @@ int __sunxi_read_key_by_name(void *buffer, uint buff_len, int *read_len)
 	else
 	{
 #ifdef CONFIG_SUNXI_SECURE_STORAGE
-		printf("read key form securestorage\n");
-		ret = sunxi_secure_object_read(key_info->name, data_buff, sizeof(sunxi_usb_burn_key_info_t), &key_data_len);
-		if(ret < 0)
-		{
-			printf("read %s form securestorage failed\n", key_info->name);
-#ifdef CONFIG_SUNXI_PRIVATE_KEY
-			printf("read key form private\n");
-			memset(data_buff, 0, 4096);
-			ret = read_private_key_by_name(key_info->name, data_buff, sizeof(sunxi_usb_burn_key_info_t), &key_data_len);
-			if(ret < 0)
-			{
-				printf("read %s form private failed\n", key_info->name);
-				return -1;
-			}
-#else
-			return -1;
+                printf("read key form securestorage\n");
+                ret = sunxi_secure_storage_read(key_info->name, data_buff, sizeof(sunxi_usb_burn_key_info_t), &key_data_len);
+                if(ret < 0)
+                {
+                        printf("read %s form securestorage failed\n", key_info->name);
+                }
 #endif
-		}
+
+#ifdef CONFIG_SUNXI_PRIVATE_KEY
+                if (ret < 0 )
+                {
+                        printf("read key form private\n");
+                        memset(data_buff, 0, 4096);
+                        ret = read_private_key_by_name(key_info->name, data_buff, sizeof(sunxi_usb_burn_key_info_t), &key_data_len);
+                        if(ret < 0)
+                        {
+                                printf("read %s form private failed\n", key_info->name);
+                                return -1;
+                        }
+                }
 #endif
 		//组装读取出来的key数据
 		key_info->len = key_data_len;
 	    memcpy((void *)(key_info->key_data), (void *)data_buff, key_data_len);
 	    *read_len += key_data_len;
 	}
-	return 0;
+	return ret;
 }
 
 /*
@@ -1282,7 +1284,7 @@ static int sunxi_pburn_state_loop(void  *buffer)
 #if defined(SUNXI_USB_30)
 			sunxi_usb_pburn_status_enable = 1;
 #endif
-			sunxi_usb_dbg("usb cbw command = 0x%x\n", cbw->CBWCDB[0]);
+			printf("usb cbw command = 0x%x\n", cbw->CBWCDB[0]);
 
 			switch(cbw->CBWCDB[0])
 	  		{

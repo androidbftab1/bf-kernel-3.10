@@ -468,7 +468,7 @@ static s32 axp_battery_get_property(struct power_supply *psy,
 		val->intval = chg_dev->bat_det;
 		break;
 	case POWER_SUPPLY_PROP_TEMP:
-		val->intval = chg_dev->bat_temp;
+		val->intval = chg_dev->bat_temp * 10;
 		break;
 	case POWER_SUPPLY_PROP_CAPACITY_ALERT_MIN:
 		val->intval = chg_dev->spy_info->batt->bat_warning_level2;
@@ -477,7 +477,7 @@ static s32 axp_battery_get_property(struct power_supply *psy,
 		val->intval = chg_dev->spy_info->batt->bat_warning_level1;
 		break;
 	case POWER_SUPPLY_PROP_TEMP_AMBIENT:
-		val->intval = chg_dev->ic_temp;
+		val->intval = chg_dev->ic_temp * 10;
 		break;
 	default:
 		ret = -EINVAL;

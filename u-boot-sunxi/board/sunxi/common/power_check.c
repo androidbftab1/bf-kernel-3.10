@@ -87,32 +87,6 @@ static void EnterNormalBootMode(void)
 	sunxi_bmp_display("bootlogo.bmp");
 }
 
-
-
-int ProbePreSystemMode(void)
-{
-    int  PreSysMode = 0;
-
-    PreSysMode = axp_probe_pre_sys_mode();
-    if(PreSysMode == PMU_PRE_SYS_MODE )
-    {
-        printf("pre sys mode\n");
-        return PMU_PRE_SYS_MODE;
-    }
-    else if(PreSysMode == PMU_PRE_CHARGE_MODE)
-    {
-        printf("pre charge mode\n");
-        return PMU_PRE_CHARGE_MODE;
-    }
-    else if(PreSysMode == PMU_PRE_FASTBOOT_MODE)
-    {
-        printf("pre fastboot mode\n");
-        return PMU_PRE_FASTBOOT_MODE;
-    }
-
-    return 0;
-}
-
 static int ProbeStartupCause(void)
 {
 	uint PowerOnCause = 0;
@@ -221,6 +195,7 @@ int PowerCheck(void)
 {
 	int BatExist = 0;
 	int PowerBus=0;
+	int PreSysMode = 0;
 	int BatVol=0;
 	int BatRatio=0;
 	int SafeVol =0;
@@ -262,21 +237,6 @@ int PowerCheck(void)
 		return 0;
 	}
 
-	//if android call shutdown when  charing , then boot should enter android charge mode
-	if((PMU_PRE_CHARGE_MODE == ProbePreSystemMode()))
-	{
-		if(PowerBus)
-		{
-			EnterAndroidChargeMode();
-		}
-		else
-		{
-			printf("pre system is charge mode,but without dc or ac, should be ShowDown\n");
-			EnterNormalShutDownMode();
-		}
-		return 0;
-	}
-
 	//check battery ratio
 	BatRatio = GetBatteryRatio();
 	BatVol = axp_probe_battery_vol();
@@ -293,6 +253,28 @@ int PowerCheck(void)
 	LowVoltageFlag  =  (BatVol<SafeVol) ? 1:0;
 	PowerOnCause = ProbeStartupCause();
 
+	PreSysMode = axp_probe_pre_sys_mode();
+	printf("PreSysMode = 0x%x\n", PreSysMode);
+	if(PreSysMode == PMU_PRE_CHARGE_MODE) {
+		//if android call shutdown when  charing , then boot should enter android charge mode
+		printf("pre charge mode\n");
+		if(PowerBus) {
+			EnterAndroidChargeMode();
+		} else {
+			printf("pre system is charge mode,but without dc or ac, should be ShowDown\n");
+			EnterNormalShutDownMode();
+		}
+		return 0;
+	}else if(PreSysMode == PMU_PRE_SYS_MODE) {
+		//normal reboot
+		printf("pre sys mode\n");
+		if(PowerBus && !LowBatRatioFlag) {
+			EnterNormalBootMode();
+			return 0;
+		}
+	}else if(PreSysMode == PMU_PRE_FASTBOOT_MODE) {
+		printf("pre fastboot mode\n");
+	}
 
 	if(LowBatRatioFlag)
 	{
