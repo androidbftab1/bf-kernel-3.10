@@ -713,7 +713,7 @@ fb0_format               = 0
 fb0_width                = 0
 fb0_height               = 0
 
-fb1_format               = 8
+fb1_format               = 0
 fb1_width                = 0
 fb1_height               = 0
 
@@ -1295,7 +1295,7 @@ compatible						= "allwinner,sunxi-bt"
 clocks 								= "outa"
 pinctrl-names					= "default"
 clock_io							= port:PI12<4><0><0><0>
-bt_power 							= "vcc-wifi"
+bt_power 							= "vcc-wifi-2"
 bt_io_regulator 			= "vcc-io-wifi"
 bt_rst_n							= port:PH12<1><1><1><0>
 
@@ -1664,7 +1664,7 @@ regulator8      = "axp221s_aldo2 none vcc-pa ehpy-vdd25"
 regulator9      = "axp221s_aldo3 none avcc vcc-pll"
 regulator10     = "axp221s_dldo1 none vcc-io-wifi vcc-pg "
 regulator11     = "axp221s_dldo2 none vcc-wifi"
-regulator12     = "axp221s_dldo3 none"
+regulator12     = "axp221s_dldo3 none vcc-wifi-2"
 regulator13     = "axp221s_dldo4 none vdd-sata-25 vcc-pf"
 regulator14     = "axp221s_eldo1 none vcc-pe csi-iovcc csi-afvcc"
 regulator15     = "axp221s_eldo2 none csi-dvdd"
